@@ -1,13 +1,15 @@
 package com.fajar.moviedb.core.data.source.local.entity
 
 
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
 
-
+@Parcelize
 @Entity(tableName = "MovieEntities")
 data class MovieEntity(
     @PrimaryKey
@@ -51,4 +53,4 @@ data class MovieEntity(
     @ColumnInfo(name = "isTvShow")
     var isTvShow: Boolean = false
 
-)
+): Parcelable

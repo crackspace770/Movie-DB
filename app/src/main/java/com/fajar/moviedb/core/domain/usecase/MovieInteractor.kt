@@ -1,19 +1,20 @@
 package com.fajar.moviedb.core.domain.usecase
 
-import com.fajar.moviedb.core.data.source.Resource
 import com.fajar.moviedb.core.domain.model.Movie
 import com.fajar.moviedb.core.domain.repository.IMovieRepository
-import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class MovieInteractor(private val tourismRepository: IMovieRepository): MovieUseCase {
+class MovieInteractor @Inject constructor (private val movieRepository: IMovieRepository): MovieUseCase {
 
-    override fun getPopularMovie() = tourismRepository.getPopularMovie()
+    override fun getPopularMovie() = movieRepository.getPopularMovie()
 
-    override fun getSearchMovie(query: String) = tourismRepository.getSearchMovie(query)
+    override fun getPopularTv() = movieRepository.getPopularTv()
 
-    override fun getFavoriteMovie() = tourismRepository.getFavoriteMovie()
+    override fun getSearchMovie(query: String) = movieRepository.getSearchMovie(query)
 
-    override fun setFavoriteMovie(tourism: Movie, state: Boolean) = tourismRepository.setFavoriteMovie(tourism, state)
+    override fun getFavoriteMovie() = movieRepository.getFavoriteMovie()
+
+    override fun setFavoriteMovie(tourism: Movie, state: Boolean) = movieRepository.setFavoriteMovie(tourism, state)
 
 
 

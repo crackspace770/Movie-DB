@@ -11,7 +11,7 @@ object SortUtils {
     const val RANDOM = "Random"
 
     fun getSortedQuery(filter: String, isTvShow: Int): SimpleSQLiteQuery {
-        val simpleQuery = StringBuilder().append("SELECT * FROM MovieEntity WHERE isTvShow = $isTvShow ")
+        val simpleQuery = StringBuilder().append("SELECT * FROM MovieEntities WHERE isTvShow = $isTvShow ")
         when (filter) {
             POPULAR -> simpleQuery.append("ORDER BY popularity DESC")
             LATEST -> simpleQuery.append("ORDER BY releaseDate DESC")

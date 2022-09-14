@@ -8,6 +8,8 @@ interface IMovieRepository {
 
     fun getPopularMovie(): Flow<Resource<List<Movie>>>
 
+    fun getPopularTv():Flow<Resource<List<Movie>>>
+
    fun getSearchMovie(query: String) : Flow<Resource<List<Movie>>>
 
     fun getFavoriteMovie(): Flow<List<Movie>>

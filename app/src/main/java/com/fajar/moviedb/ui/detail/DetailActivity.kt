@@ -2,52 +2,48 @@ package com.fajar.moviedb.ui.detail
 
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.fajar.moviedb.R
 import com.fajar.moviedb.core.domain.model.Movie
-import com.fajar.moviedb.core.ui.ViewModelFactory
 import com.fajar.moviedb.core.utils.Constant.Companion.IMAGE_BASE_URL
 import com.fajar.moviedb.databinding.ActivityDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class DetailActivity: AppCompatActivity() {
 
     companion object {
         const val EXTRA_DATA = "extra_data"
     }
 
-    private lateinit var detailTourismViewModel: DetailViewModel
+    private val detailViewModel: DetailViewModel by viewModels()
     private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //(application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //setSupportActionBar(binding.toolbar)
-
-        val factory = ViewModelFactory.getInstance(this)
-        detailTourismViewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
-
-        val detailTourism = intent.getParcelableExtra<Movie>(EXTRA_DATA)
-        showDetailTourism(detailTourism)
+        val detailMovie = intent.getParcelableExtra<Movie>(EXTRA_DATA)
+        showDetailMovie(detailMovie)
     }
 
-    private fun showDetailTourism(detailTourism: Movie?) {
+    private fun showDetailMovie(movie: Movie?) {
         binding.apply {
-            detailTourism?.apply {
+            movie?.apply {
                 supportActionBar?.title = title
                 tvTitle.text= title
                 tvDescription.text = overview
                 tvGenre.text=  if (genres == null || genres == "") getString(R.string.no_genre_data) else genres
                 tvRating.text= voteAverage.toString()
                 tvPopularity.text= popularity.toString()
-
                 ivDetailImage.loadImage("${IMAGE_BASE_URL}${backdropPath}")
 
 
@@ -85,12 +81,12 @@ class DetailActivity: AppCompatActivity() {
                 setStatusFavorite(statusFavorite)
                 fab.setOnClickListener {
                     statusFavorite = !statusFavorite
-                    detailTourismViewModel.setFavoriteTourism(detailTourism, statusFavorite)
+                    detailViewModel.setFavoriteTourism(movie, statusFavorite)
                     setStatusFavorite(statusFavorite)
                 }
             }
         }
-        detailTourism?.let {
+        movie?.let {
 
         }
     }

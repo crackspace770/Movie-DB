@@ -5,23 +5,17 @@ import com.fajar.moviedb.core.data.source.remote.network.ApiResponse
 import com.fajar.moviedb.core.data.source.remote.network.ApiService
 import com.fajar.moviedb.core.data.source.remote.response.MovieResponse
 import com.fajar.moviedb.core.data.source.remote.response.SearchResponse
+import com.fajar.moviedb.core.data.source.remote.response.TvResponse
 import com.fajar.moviedb.core.utils.Constant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class RemoteDataSource private constructor(private val apiService: ApiService) {
-    companion object {
-        @Volatile
-        private var instance: RemoteDataSource? = null
-
-        fun getInstance(service: ApiService): RemoteDataSource =
-            instance ?: synchronized(this) {
-                instance ?: RemoteDataSource(service)
-            }
-    }
+@Singleton
+class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
     private val apiKey = Constant.API_KEY
 
@@ -34,7 +28,25 @@ class RemoteDataSource private constructor(private val apiService: ApiService) {
                 if (dataArray.isNotEmpty()){
                     emit(ApiResponse.Success(response.results))
                 } else {
-                    emit(ApiResponse.Empty)
+                    emit(ApiResponse.Empty(response.results))
+                }
+            } catch (e : Exception){
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("RemoteDataSource", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getTv(): Flow<ApiResponse<List<TvResponse>>> {
+        //get data from remote api
+        return flow {
+            try {
+                val response = apiService.getPopularTvShowList(apiKey)
+                val dataArray = response.results
+                if (dataArray.isNotEmpty()){
+                    emit(ApiResponse.Success(response.results))
+                } else {
+                    emit(ApiResponse.Empty(response.results))
                 }
             } catch (e : Exception){
                 emit(ApiResponse.Error(e.toString()))
@@ -52,7 +64,7 @@ class RemoteDataSource private constructor(private val apiService: ApiService) {
                 if (dataArray.isNotEmpty()){
                     emit(ApiResponse.Success(response.results))
                 } else {
-                    emit(ApiResponse.Empty)
+                    emit(ApiResponse.Empty(response.results))
                 }
             } catch (e : Exception){
                 emit(ApiResponse.Error(e.toString()))

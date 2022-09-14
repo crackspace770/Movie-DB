@@ -3,6 +3,7 @@ package com.fajar.moviedb.core.utils
 import com.fajar.moviedb.core.data.source.local.entity.MovieEntity
 import com.fajar.moviedb.core.data.source.remote.response.MovieResponse
 import com.fajar.moviedb.core.data.source.remote.response.SearchResponse
+import com.fajar.moviedb.core.data.source.remote.response.TvResponse
 import com.fajar.moviedb.core.domain.model.Movie
 
 object DataMapper {
@@ -24,6 +25,29 @@ object DataMapper {
                 backdropPath = it.backdropPath,
                 isFavorite = false,
                         isTvShow = it.isTvShow
+            )
+            movieList.add(movie)
+        }
+        return movieList
+    }
+
+    fun mapTvToEntities(input: List<TvResponse>): List<MovieEntity> {
+        val movieList = ArrayList<MovieEntity>()
+        input.map {
+            val movie = MovieEntity(
+                id = it.id,
+                title = it.title,
+                releaseDate = it.releaseDate,
+                overview = it.overview,
+                genres = it.genres,
+                runtime = it.runtime,
+                tagline = it.tagline,
+                voteAverage = it.voteAverage,
+                popularity = it.popularity,
+                posterPath = it.posterPath,
+                backdropPath = it.backdropPath,
+                isFavorite = false,
+                isTvShow = it.isTvShow
             )
             movieList.add(movie)
         }

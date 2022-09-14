@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fajar.moviedb.R
 import com.fajar.moviedb.core.domain.model.Movie
-import com.fajar.moviedb.core.utils.Constant.Companion.IMAGE_BASE_URL
+import com.fajar.moviedb.core.utils.Constant
 import com.fajar.moviedb.databinding.ItemListTourismBinding
 import java.util.ArrayList
 
-class MovieAdapter: RecyclerView.Adapter<MovieAdapter.ListViewHolder>() {
+class TvAdapter: RecyclerView.Adapter<TvAdapter.ListViewHolder>() {
 
     private var listData = ArrayList<Movie>()
     var onItemClick: ((Movie) -> Unit)? = null
@@ -30,7 +30,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.ListViewHolder>() {
 
     override fun getItemCount() = listData.size
 
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TvAdapter.ListViewHolder, position: Int) {
         val data = listData[position]
         holder.bind(data)
     }
@@ -40,7 +40,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.ListViewHolder>() {
         fun bind(data: Movie) {
             with(binding) {
                 Glide.with(itemView.context)
-                    .load("${IMAGE_BASE_URL}${data.posterPath}")
+                    .load("${Constant.IMAGE_BASE_URL}${data.posterPath}")
                     .into(ivItemImage)
                 tvItemTitle.text = data.title
                 tvItemSubtitle.text = data.voteAverage.toString()
@@ -53,6 +53,5 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.ListViewHolder>() {
             }
         }
     }
-
 
 }

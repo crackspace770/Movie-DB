@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">The Movie DB</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Popular Movie</string>
     <string name="title_search">Search</string>
     <string name="title_favorite">Favorites</string>
+    <string name="title_tv">TV Series</string>
     <string name="image_description">Image</string>
     <string name="text_primary">Sample of title text</string>
     <string name="text_subtitle">Sample of subtitle text</string>

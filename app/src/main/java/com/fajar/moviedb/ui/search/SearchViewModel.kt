@@ -5,8 +5,11 @@ import androidx.lifecycle.*
 import com.fajar.moviedb.core.data.source.Resource
 import com.fajar.moviedb.core.domain.model.Movie
 import com.fajar.moviedb.core.domain.usecase.MovieUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SearchViewModel(private val movieUseCase: MovieUseCase): ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(private val movieUseCase: MovieUseCase): ViewModel() {
 
     private val listMovieMutable = MutableLiveData<ArrayList<Movie>>()
     private val _isLoading = MutableLiveData<Boolean>()

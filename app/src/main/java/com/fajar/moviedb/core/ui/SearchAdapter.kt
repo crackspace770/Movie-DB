@@ -14,6 +14,7 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>()  {
 
     private lateinit var onItemClickCallback: ItemClickCallBack
     var listMovie = ArrayList<Movie>()
+    var onItemClick: ((Movie) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = ItemListTourismBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,11 +28,8 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>()  {
 
     override fun getItemCount(): Int = listMovie.size
 
-    fun setOnItemClickCallback(onItemClickCallback: ItemClickCallBack) {
-        this.onItemClickCallback = onItemClickCallback
-    }
 
-    fun setData(items: ArrayList<Movie>) {
+    fun setData(items: List<Movie>) {
         val diffUtils = SearchDiffUtil(listMovie, items)
         val diffResult = DiffUtil.calculateDiff(diffUtils)
         listMovie.clear()
@@ -58,5 +56,9 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.ViewHolder>()  {
 
         }
     }
-
+    fun clearList(){
+        val size = listMovie.size
+        listMovie.clear()
+        notifyItemRangeRemoved(0, size)
+    }
 }

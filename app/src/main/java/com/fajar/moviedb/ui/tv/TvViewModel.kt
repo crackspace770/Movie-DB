@@ -1,4 +1,4 @@
-package com.fajar.moviedb.ui.favorite
+package com.fajar.moviedb.ui.tv
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -7,6 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoriteViewModel @Inject constructor(private val movieUseCase: MovieUseCase): ViewModel() {
-    val favoriteMovie = movieUseCase.getFavoriteMovie().asLiveData()
+class TvViewModel @Inject constructor(movieUseCase: MovieUseCase) : ViewModel() {
+
+    val tv = movieUseCase.getPopularTv().asLiveData()
+
+
 }
